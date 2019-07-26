@@ -1,0 +1,27 @@
+<div class="table-responsive">
+  <table class="table table-bordered table-hover">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Server Name</th>
+        <th scope="col">Status</th>
+      </tr>
+    </thead>
+    <tbody *ngFor="let server of servers">
+      <tr [ngSwitch]="server.status" [routerLink]="['/servers', server.id]"
+        [queryParams]="{allowedEdit: server.id === 1 ? '1' : '0'}">
+        <td>
+          {{ server.name }}
+        </td>
+        <td class="success" *ngSwitchCase="'online'">
+          {{ server.status }}
+        </td>
+        <td class="danger" *ngSwitchCase="'offline'">
+          {{ server.status }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="col-xs-12 col-sm-4">
+  <router-outlet></router-outlet>
+</div>
