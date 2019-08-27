@@ -1,7 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ServersService } from '../servers.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { Subscription, Observable } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-server',
@@ -9,6 +9,7 @@ import { Subscription, Observable } from 'rxjs';
   styleUrls: ['./server.component.css']
 })
 export class ServerComponent implements OnInit {
+  allowEdit: boolean;
   server: { id: number, name: string, status: string };
   paramsSubscription: Subscription;
 
@@ -16,6 +17,11 @@ export class ServerComponent implements OnInit {
               private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
+    this.route.queryParams.subscribe(
+      (queryParams: Params) => {
+        this.allowEdit = queryParams.allowedEdit === '1' ? true : false;
+      }
+    );
     this.paramsSubscription = this.route.params.subscribe(
       (params: Params) => {
         this.server = this.serversService.getServer(Number(params.id));

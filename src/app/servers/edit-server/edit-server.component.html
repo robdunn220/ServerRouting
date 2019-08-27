@@ -1,4 +1,4 @@
-<h4 *ngIf="!allowEdit">{{ allowEdit }}</h4>
+<h4 *ngIf="!allowEdit">Not allowed to edit this server.</h4>
 <div *ngIf="allowEdit">
   <div class="form-group">
     <label for="name">Server Name</label>
@@ -15,7 +15,8 @@
     <div class="col-sm-5">
       <button class="btn btn-primary"
         [disabled]="(server.name !== serverName || server.status !== serverStatus) ? false: true"
-        (click)="onUpdateServer()" [routerLink]="['/servers', server.id]">Update Server</button>
+        (click)="onUpdateServer()" [routerLink]="['/servers', server.id]"
+        [queryParams]="{allowedEdit: server.id === 2 ? '1' : '0'}">Update Server</button>
     </div>
   </div>
 </div>
